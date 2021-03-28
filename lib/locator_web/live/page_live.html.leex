@@ -1,4 +1,1 @@
-<p><%= @ip_address %></p>
-<%= if @latitude do %>
-  <p><%= @latitude %>, <%= @longitude %></p>
-<% end %>
+<div id="map" phx-hook="Map" phx-update="ignore"></div>
