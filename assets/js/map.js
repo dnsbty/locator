@@ -10,6 +10,18 @@ class Map {
       noWrap: true,
     }).addTo(this.map);
   }
+
+  addUserLocation({ latitude, longitude }) {
+    const userIcon = new L.Icon({
+      iconUrl: "/images/user-location.png",
+      iconSize: [32, 32],
+      iconAnchor: [16, 16],
+    });
+
+    const marker = L.marker([latitude, longitude], { icon: userIcon });
+
+    return marker.addTo(this.map);
+  }
 }
 
 export default Map;

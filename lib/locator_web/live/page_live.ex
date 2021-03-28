@@ -11,7 +11,13 @@ defmodule LocatorWeb.PageLive do
   @impl true
   def handle_info(:get_location, socket) do
     {lat, lng} = Locator.locate(socket.assigns.ip_address)
-    {:noreply, assign(socket, latitude: lat, longitude: lng)}
+
+    socket =
+      socket
+      |> assign(latitude: lat, longitude: lng)
+      |> push_event("user-location", %{latitude: lat, longitude: lng})
+
+    {:noreply, socket}
   end
 
   defp put_connect_info(socket = %{connected?: false}) do

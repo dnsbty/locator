@@ -22,6 +22,10 @@ let Hooks = {
   Map: {
     mounted() {
       this.map = new Map(this.el);
+
+      this.handleEvent("user-location", (userLocation) => {
+        this.map.addUserLocation(userLocation);
+      });
     },
   },
 };
