@@ -1,9 +1,10 @@
 defmodule Locator do
-  @moduledoc """
-  Locator keeps the contexts that define your domain
-  and business logic.
+  def locate("127.0.0.1"), do: {0, 0}
 
-  Contexts are also responsible for managing your data, regardless
-  if it comes from the database, an external API or others.
-  """
+  def locate(ip_address) do
+    case GeoIP.lookup(ip_address) do
+      {:ok, %{latitude: lat, longitude: lng}} -> {lat, lng}
+      _ -> {0, 0}
+    end
+  end
 end

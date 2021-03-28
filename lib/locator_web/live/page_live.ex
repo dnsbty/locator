@@ -3,7 +3,15 @@ defmodule LocatorWeb.PageLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, put_connect_info(socket)}
+    send(self(), :get_location)
+    socket = socket |> put_connect_info() |> assign(latitude: nil, longitude: nil)
+    {:ok, socket}
+  end
+
+  @impl true
+  def handle_info(:get_location, socket) do
+    {lat, lng} = Locator.locate(socket.assigns.ip_address)
+    {:noreply, assign(socket, latitude: lat, longitude: lng)}
   end
 
   defp put_connect_info(socket = %{connected?: false}) do

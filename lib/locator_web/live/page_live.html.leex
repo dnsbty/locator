@@ -1,1 +1,4 @@
-<div><%= @ip_address %></div>
+<p><%= @ip_address %></p>
+<%= if @latitude do %>
+  <p><%= @latitude %>, <%= @longitude %></p>
+<% end %>
