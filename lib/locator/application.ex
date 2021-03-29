@@ -11,6 +11,7 @@ defmodule Locator.Application do
       LocatorWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: Locator.PubSub},
+      Locator.Presence,
       # Start the Endpoint (http/https)
       LocatorWeb.Endpoint
       # Start a worker by calling: Locator.Worker.start_link(arg)

@@ -23,6 +23,12 @@ let Hooks = {
     mounted() {
       this.map = new Map(this.el);
 
+      this.handleEvent("new-users", ({ new_users: users }) => {
+        users.forEach((userLocation) => {
+          this.map.addMarker(userLocation);
+        });
+      });
+
       this.handleEvent("user-location", (userLocation) => {
         this.map.addUserLocation(userLocation);
       });
