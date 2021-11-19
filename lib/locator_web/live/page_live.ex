@@ -2,6 +2,8 @@ defmodule LocatorWeb.PageLive do
   use LocatorWeb, :live_view
   alias Locator.Presence
 
+  @allowed_headers ["x-forwarded-for"]
+
   @impl true
   def mount(_params, _session, socket) do
     send(self(), :get_location)
@@ -38,8 +40,15 @@ defmodule LocatorWeb.PageLive do
 
   defp put_connect_info(socket) do
     connect_info = get_connect_info(socket)
-    ip_tuple = connect_info[:peer_data][:address]
-    ip_string = ip_tuple |> :inet.ntoa() |> to_string()
-    assign(socket, ip_address: ip_string)
+
+    if peer_ip = connect_info[:peer_data][:address] do
+      x_headers = connect_info[:x_headers] || [] |> IO.inspect(label: "x heders")
+      proxies = [Application.get_env(:locator, :public_ipv4)] |> IO.inspect(label: "proxies")
+      remote_ip = RemoteIp.from(x_headers, headers: @allowed_headers, proxies: proxies)
+      ip_string = (remote_ip || peer_ip) |> :inet.ntoa() |> to_string()
+      assign(socket, ip_address: ip_string)
+    else
+      assign(socket, ip_address: nil)
+    end
   end
 end

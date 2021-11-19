@@ -26,3 +26,5 @@ config :locator, LocatorWeb.Endpoint,
   ],
   secret_key_base: secret_key_base,
   server: true
+
+config :locator, public_ipv4: System.get_env("PUBLIC_IPV4")

@@ -42,6 +42,7 @@ defmodule Locator.MixProject do
       {:telemetry_poller, "~> 0.4"},
       {:jason, "~> 1.0"},
       {:geoip, "~> 0.2"},
+      {:remote_ip, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"}
     ]
   end
